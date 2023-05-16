@@ -1,0 +1,23 @@
+import { useEffect, useState } from 'react'
+
+function App() {
+  const [file, setFile] = useState()
+  function handleChange(e) {
+    const fileurl = e.target.files[0]
+    fileurl.pictureurl = URL.createObjectURL(fileurl)
+    setFile(fileurl)
+  }
+  useEffect(() => {
+    return () => {
+      file && URL.revokeObjectURL(file.pictureurl)
+    }
+  }, [file])
+  return (
+    <div>
+      <input type="file" onChange={handleChange} />
+      {file && <img width="10%" src={file.pictureurl} />}
+    </div>
+  )
+}
+
+export default App
